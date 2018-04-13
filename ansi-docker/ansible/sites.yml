@@ -1,0 +1,13 @@
+- hosts: app.server.com
+  connection: local
+  roles:
+    - { role: start-container, host_name: app.server.com, image_name: nodejsapp, container_name: nodejsapp, dockerfile: DockerfileNode }
+  volumes:
+    - app-data:/var/ww/html
+
+- hosts: db.server.com
+  connection: local
+  roles:
+    - { role: start-container, host_name: db.server.com, image_name: dbserver, container_name: debserver, dockerfile: DockerfileDb }
+  volumes:
+    - db-data:/var/lib/mysql

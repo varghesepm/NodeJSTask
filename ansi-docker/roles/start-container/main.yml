@@ -1,0 +1,21 @@
+- name: Create container
+  docker_image:
+    name: "{{ image_name }}"
+    path: "{{ pbook_dir }}/.."
+    dockerfile: "{{ dockerfile }}"
+    state: build
+
+- name: Start container
+  docker:
+    image: "{{ image_name }}"
+    name: "{{ container_name }}"
+    pull: missing
+    detach: yes
+    net: bridge
+    tty: yes
+    command: sleep infinity
+    state: reloaded
+
+- name: Register container
+  add_host:
+    name: "{{ host_name }}"
